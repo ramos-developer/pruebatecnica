@@ -1,7 +1,5 @@
 <?php
 
-namespace Database\Seeders;
-
 use App\Models\CustomerHobbie;
 use Illuminate\Database\Seeder;
 

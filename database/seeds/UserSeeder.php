@@ -13,24 +13,20 @@ class UserSeeder extends Seeder
     public function run()
     {
         $admin = User::create(array(
-            'name' => 'Super Admin',
-            'email' => 'superadmin@email.com',
+            'name' => 'admin',
+            'email' => 'admin@email.com',
             'activated' => 1,
             'password' => bcrypt('123456789'),
         ));
+        \Bloonde\UsersAndPrivileges\Profile::find(\App\Helpers\ProfileHelper::ADMIN_PROFILE)->users()->attach($admin->id);
 
-        $admin = User::create(array(
-            'name' => 'Admin Company',
-            'email' => 'admincompany@email.com',
+        $customer = User::create(array(
+            'name' => 'Customer',
+            'email' => 'customer@email.com',
             'activated' => 1,
             'password' => bcrypt('123456789'),
         ));
+        \Bloonde\UsersAndPrivileges\Profile::find(\App\Helpers\ProfileHelper::CUSTOMER_PROFILE)->users()->attach($customer->id);
 
-        $admin = User::create(array(
-            'name' => 'User Final',
-            'email' => 'userfinal@email.com',
-            'activated' => 1,
-            'password' => bcrypt('123456789'),
-        ));
     }
 }

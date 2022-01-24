@@ -10,11 +10,11 @@ class DatabaseSeeder extends Seeder {
 	{
 		Model::unguard();
         $this->call([
-            // ProfileTableSeeder::class,
+            ProfileTableSeeder::class,
             UserSeeder::class,
             CustomerSeeder::class,
             HobbieSeeder::class,
-            CustomerHobbieSeeder::class
+            // CustomerHobbieSeeder::class
         ]);
 	}
 }

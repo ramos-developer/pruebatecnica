@@ -47,7 +47,7 @@ Artisan::command('init-database {withSeed}', function ($withSeed = null){
     $this->info('Migradas tablas del core');
 
     if($withSeed) {
-        $this->call('db:seed', ['--class' => 'Bloonde\CitiesStatesAndNationalities\Database\Seeds\CitiesStatesAndNationalitiesDatabaseSeeder']);
+        // $this->call('db:seed', ['--class' => 'Bloonde\CitiesStatesAndNationalities\Database\Seeds\CitiesStatesAndNationalitiesDatabaseSeeder']);
         $this->call('db:seed', ['--class' => 'DatabaseSeeder']);
     }
 

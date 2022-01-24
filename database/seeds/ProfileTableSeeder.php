@@ -12,9 +12,8 @@ class ProfileTableSeeder extends Seeder
     public function run()
     {
         $profiles = [
-            ['name' => 'superadmin'],
-            ['name' => 'admin_company'],
-            ['name' => 'user_final']
+            ['name' => 'admin'],
+            ['name' => 'customer'],
         ];
 
         foreach($profiles as $profile){
