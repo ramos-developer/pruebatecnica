@@ -2,6 +2,9 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CustomCheckPrivilege;
+use Bloonde\UsersAndPrivileges\Http\Middleware\CheckAccountActivation;
+use Bloonde\UsersAndPrivileges\Http\Middleware\CheckProfile;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel

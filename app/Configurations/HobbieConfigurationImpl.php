@@ -119,7 +119,7 @@ class HobbieConfigurationImpl implements IFrameworkConfiguration
          * return ['users.id as id',
          *          'users.name as name']
          */
-        return [];
+        return ['hobbies.id', 'hobbies.name'];
 
     }
 

@@ -70,7 +70,8 @@ class CustomerConfigurationImpl implements IFrameworkConfiguration
         /**
          * return ['name', 'filter', ['field' => 'status', 'operator' => 'in']
          */
-        return ['profile_id', 'status_id'];
+        // return ['profile_id', 'status_id'];
+        return ['user_id'];
     }
 
     /**

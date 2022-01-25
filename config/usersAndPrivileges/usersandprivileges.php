@@ -1,5 +1,5 @@
 <?php
-// TODO el welcome_mail estaba en true
+// TODO Welcome_mail estaba en true
 return [
     'welcome_email' => [
         'welcome_mail' => false,

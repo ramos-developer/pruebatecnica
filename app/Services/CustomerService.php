@@ -12,6 +12,7 @@ use App\Helpers\ProfileHelper;
 use App\Repositories\CustomerRepository;
 use App\Http\Resources\CustomerResource;
 use App\Http\Resources\CustomerResourceCollection;
+use App\Models\CustomerHobbie;
 use Bloonde\UsersAndPrivileges\Services\UserService;
 use Bloonde\UsersAndPrivileges\User;
 use Mockery\Undefined;
@@ -94,7 +95,7 @@ class CustomerService extends AbstractService
         return parent::extraSet($request, $model, $extra, $prefix);
     }
 
-    private function setCustomerHobbies($request, $customer)
+    private function setCustomerHobbiesPropio($request, $customer)
     {
         $hobbies = $request->get('hobbies');
         // Extraigo las claves de aquellos ya guardados
@@ -115,6 +116,17 @@ class CustomerService extends AbstractService
             }
         }
         $customer->hobbies()->sync($hobbies_withPivot);
+    }
+
+    private function setCustomerHobbies($request, $customer)
+    {
+        $hobbies = $request->get('hobbies');
+        $ids = [];
+        foreach ($hobbies as $hobbie_id ) {
+            $customer_hobbie = CustomerHobbie::firstOrCreate(['customer_id' => $customer->id, 'hobbie_id' => $hobbie_id]);
+            array_push($ids, $customer_hobbie->id);
+        }
+        CustomerHobbie::where('customer_id', $customer->id)->whereNotIn('id', $ids)->delete();
     }
 
     public function delete($id){
