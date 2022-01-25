@@ -6,7 +6,6 @@ namespace App;
 class Autoload
 {
     const CLASSES = [
-        'post' => 'App\Configurations\PostConfigurationImpl',
         'customer' => 'App\Configurations\CustomerConfigurationImpl',
         'hobbie' => 'App\Configurations\HobbieConfigurationImpl',
         'customerhobbie' => 'App\Configurations\CustomerhobbieConfigurationImpl',

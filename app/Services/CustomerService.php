@@ -8,9 +8,14 @@ use Bloonde\ProjectGenerator\Helpers\CodesHelper;
 use Illuminate\Support\Facades\Lang;
 
 use App\Configurations\CustomerConfigurationImpl;
+use App\Helpers\ProfileHelper;
 use App\Repositories\CustomerRepository;
 use App\Http\Resources\CustomerResource;
 use App\Http\Resources\CustomerResourceCollection;
+use Bloonde\UsersAndPrivileges\Services\UserService;
+use Bloonde\UsersAndPrivileges\User;
+use Mockery\Undefined;
+use phpDocumentor\Reflection\Types\Null_;
 
 class CustomerService extends AbstractService
 {
@@ -21,15 +26,18 @@ class CustomerService extends AbstractService
 
     public $configuration_impl;
     public $model;
+    protected $userService;
 
 
 
     public function __construct()
     {
-        
+
         $this->configuration_impl = new CustomerConfigurationImpl();
+
         $this->model = $this->configuration_impl->getModelName();
         $this->repository = CustomerRepository::getInstance();
+        $this->userService = UserService::getInstance();
     }
 
     /** This function receive an id and return the venue with the id
@@ -66,6 +74,13 @@ class CustomerService extends AbstractService
 
     public function update($request, $id = null){
         // TODO Aquí hay que crear o actualizar el usuario customer. Una vez hecho, se actualizan los datos de la tabla customer
+        $user = User::where('email', $request->get('email'))->first();
+        $user_id = null;
+        if(!is_null($user)) {
+            $user_id = $user->id;
+        }
+        $user = $this->userService->update($request, $user_id, [ProfileHelper::CUSTOMER_PROFILE]);
+        $request->merge(['user_id' => $user->id]);
         $model = $this->model::firstOrNew(['id' => $id]);
         $customer = $this->set($request, $model);
         // TODO setear customer hobbies.
@@ -82,7 +97,24 @@ class CustomerService extends AbstractService
     private function setCustomerHobbies($request, $customer)
     {
         $hobbies = $request->get('hobbies');
-        $customer->hobbies()->syncWithPivotValues($hobbies, ['created_at' => now(), 'updated_at' => now()]);
+        // Extraigo las claves de aquellos ya guardados
+        $guarded_hobbies = array();
+        foreach ($customer->hobbies as $hobbie) {
+            array_push($guarded_hobbies, $hobbie->id);
+        }
+        //Creo un array para el método sync con los timestamp de cada caso
+        $hobbies_withPivot = array();
+        foreach ($hobbies as $hobbie ) {
+            if (in_array($hobbie, $guarded_hobbies)) {
+                $hobbies_withPivot[$hobbie] = [
+                    'updated_at' => now()];
+            } else {
+                $hobbies_withPivot[$hobbie] = [
+                    'created_at' => now(),
+                    'updated_at' => now()];
+            }
+        }
+        $customer->hobbies()->sync($hobbies_withPivot);
     }
 
     public function delete($id){

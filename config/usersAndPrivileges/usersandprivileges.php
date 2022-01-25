@@ -1,8 +1,8 @@
 <?php
-
+// TODO el welcome_mail estaba en true
 return [
     'welcome_email' => [
-        'welcome_mail' => true,
+        'welcome_mail' => false,
         'mail_verification' => true,
         'template' => 'default',
         'subject' => 'welcome',

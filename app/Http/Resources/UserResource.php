@@ -21,13 +21,11 @@ class UserResource extends JsonResource
             'password',
             'remember_token',
             'email_verified_at',
-            'status_id',
-            'profile_id',
         ];
         foreach ($array_field as $field) {
             $result[$field] = $this->$field;
         }
-       
+
         return $result;
     }
 }

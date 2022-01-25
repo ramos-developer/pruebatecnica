@@ -25,8 +25,6 @@ class UserResourceCollection extends JsonResource
                 'password',
                 'remember_token',
                 'email_verified_at',
-                'status_id',
-                'profile_id',
             ];
             foreach ($array_field as $field) {
                 $newElement[$field] = $element->$field;

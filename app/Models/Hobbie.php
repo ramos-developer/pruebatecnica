@@ -4,15 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Hobbie extends Model 
+class Hobbie extends Model
 {
 
     protected $table = 'hobbies';
+    protected $fillable = ['id'];
     public $timestamps = true;
 
     public function customers()
     {
-        return $this->belongsToMany('App\Models\Customer');
+        return $this->belongsToMany('App\Models\Customer', 'customers_hobbies');
     }
 
 }
